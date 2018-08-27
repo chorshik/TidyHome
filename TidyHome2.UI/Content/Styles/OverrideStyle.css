@@ -1,0 +1,7 @@
+﻿.navbar{
+  margin-bottom: 0px;
+}
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive{
+    height: 500px;
+    width: 1000px;
+}

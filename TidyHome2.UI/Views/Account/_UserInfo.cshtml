@@ -1,0 +1,22 @@
+﻿@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <a href="#" class="account-header-info dropdown-toggle" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-user"></span>
+        <span>@User.Identity.Name</span>
+        <span class="caret"></span>
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li>@Html.ActionLink("Личный кабинет", "Index", "Office")</li>
+        <li class="divider"></li>
+        <li>@Html.ActionLink("Выход", "Logout", "Account")</li>
+    </ul>
+}
+else
+{
+    <div class="pull-right">
+        @Html.ActionLink("Регистрация", "Checkin", "Account", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Вход", "Login", "Account", new { @class = "btn btn-success" })
+    </div>
+}
+

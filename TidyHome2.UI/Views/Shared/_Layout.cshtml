@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – приложение ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/Styles/MyStyle.css" rel="stylesheet" />
+    <link href="~/Content/Styles/OverrideStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse" id="responsive-menu">
+                <ul class="nav nav-pills">
+                    <li class="layout-li">@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                    <li class="layout-li">@Html.ActionLink("Услуги", "Index", "Service")</li>
+                    <li class="layout-li">@Html.ActionLink("О программе", "About", "Home")</li>
+                    <li class="layout-li">@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                    <li style="margin-top: 4px; text-align: center; " class=" dropdown pull-right" id="responsive-menu">
+                        @Html.Action("_UserInfo", "Account")
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+        {
+
+            <div class="navbar navbar-inverse">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Employee-menu">
+                            <span class="sr-only"> Открыть навигацию</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Меню сотрудника", "Index", "Home", null, new { @class = "navbar-brand", style = "text-align:center" })
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="Employee-menu">
+                        <ul class="nav nav-pills">
+                            <li class="collapse navbar-collapse" id="Employee-menu">
+                                @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                                {
+
+                                    <ul class="nav nav-pills" style="text-align:center">
+                                        <li class="layout-li">@Html.ActionLink("Заявки", "Index", "Bid")</li>
+                                        <li class="layout-li">@Html.ActionLink("Заказы", "Index", "Order")</li>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <li class="layout-li">@Html.ActionLink("Пользователи", "Index", "User")</li>
+
+                                        }
+                                        <li class="layout-li">
+                                            @*@if (User.IsInRole("Admin"))
+                                                {
+                                                    @Html.CheckBox("Admin", GrandService.UI.Web.Models.CheckViewAdminCash.Flag, new { id = "Admin", name = "0" })
+                                                }*@
+                                        </li>
+                                    </ul>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+    {
+        <br /><br /><br />
+    }
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
